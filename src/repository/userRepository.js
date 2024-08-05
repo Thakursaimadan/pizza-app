@@ -1,15 +1,29 @@
 
+const { response } = require("express");
 const User=require("../schema/userSchema")
-class UserRepository{
-    async findUser(parameters){
-        const reponse=await User.findOne({...parameters})
+    async function findUser(parameters){
+        try{
+            const reponse=await User.findOne({...parameters})
+            return response;
+        }
+        catch(err)
+        {
+            console.log(err)
+        }
 
     }
-    async createUser(userDetails)
+    async function createUser(userDetails)
     {
-        const response=await User.create(userDetails);
-        return response;
+        try{
+            
+            const response=await User.create(userDetails);
+            return response;
+        }
+        catch(err)
+        {
+            console.log(err)
+        }
+       
     }
-}
 
-module.exports=UserRepository
+module.exports={findUser,createUser}
