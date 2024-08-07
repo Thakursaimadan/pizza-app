@@ -1,4 +1,5 @@
-const { CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET, cloud_name, cloud_key, cloud_secret, cloud_api } = require('./serverconfig');
+const { cloud_name, cloud_api, cloud_secret } = require('./serverconfig');
+
 
 const cloudinary = require('cloudinary').v2;
 

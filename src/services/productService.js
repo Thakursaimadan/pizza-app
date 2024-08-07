@@ -13,7 +13,13 @@ async function registerProduct(productDetails) {
         try{
             const cloudinaryResponse=await cloudinary.uploader.upload(imagePath);
             var productImage=cloudinaryResponse.secure_url
-            await fs.unlink(imagePath);
+            try {
+                await fs.unlink(imagePath);
+                console.log(`Successfully deleted ${imagePath}`);
+            } catch (err) {
+                console.error(`Error deleting file ${imagePath}:`, err);
+            }
+            
         }
         catch(err)
         {
