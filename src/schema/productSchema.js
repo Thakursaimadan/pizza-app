@@ -26,7 +26,7 @@ const productSchema = new mongoose.Schema({
         enum:['veg','non-veg','drinks','sides'],
         default:'veg'
     },
-    Instock:{
+    instock:{
         type:Boolean,
         required:[true,"Instock property is required"],
         default:true
