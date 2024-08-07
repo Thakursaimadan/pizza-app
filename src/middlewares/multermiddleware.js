@@ -1,4 +1,4 @@
-const multer = requier('multer');
+const multer = require('multer');
 const path= require('path')
 
 const storageConfiguration=multer.diskStorage({
@@ -9,5 +9,5 @@ const storageConfiguration=multer.diskStorage({
         next(null,`${Date.now()}${path.extname(file.originalname)}`)
     }
 })
-const uploader=multer({Storage: storageConfiguration})
-moudule.exports=uploader;
+const uploader=multer({storage: storageConfiguration})
+module.exports=uploader;

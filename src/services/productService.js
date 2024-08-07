@@ -1,7 +1,9 @@
 
 const cloudinary=require('../config/cloudinaryconfig');
-const Product = require('../schema/productSchema');
-const fs=require('fs/promises')
+
+const fs=require('fs/promises');
+const productRepo = require('../repository/productRepo');
+
 async function registerProduct(productDetails) {
 
     //1.we should check if an image is coming to create product the we should upload it in cloudinary
@@ -15,19 +17,29 @@ async function registerProduct(productDetails) {
         }
         catch(err)
         {
+            console.log("iam here123")
+            // console.log('Cloudinary Cloud Name:', process.env.CLOUDINARY_CLOUD_NAME);
+            // console.log('Cloudinary API Key:', process.env.CLOUDINARY_API_KEY);
+            // console.log('Cloudinary API Secret:', process.env.CLOUDINARY_API_SECRET);
             console.log(err)
+
             throw {reason:'not able create product',statusCode:500}
         }
         
     }
 
     //2.then use the url from cloudinary and other product details to add product in db
-    const product=await Product.create({...productDetails,
-        productImage:productImage
+
+    
+    console.log("product Image",productImage)
+    const product=await productRepo.createProduct({...productDetails,
+        ProductImage:productImage
     });
+    console.log(product)
 
     if(!product)
     {
+        
         throw {reason:'not able create product',statusCode:500}
     }
     return product;

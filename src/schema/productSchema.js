@@ -8,7 +8,7 @@ const productSchema = new mongoose.Schema({
         lowercase: true,
         trim: true, // if the user gives extra spaces then it will automatically remove it
     },
-    discription:{
+    description:{
         type:String,
         minlength: [5, "product name must be atleast 5 character long"],
         

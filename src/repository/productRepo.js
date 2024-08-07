@@ -1,6 +1,6 @@
 const Product = require("../schema/productSchema")
 
-async function CreateProduct(productDetails){
+async function createProduct(productDetails){
     try{
         const response=await Product.create(productDetails)
         return response;
@@ -12,5 +12,5 @@ async function CreateProduct(productDetails){
     }
 }
 
-module.exports=CreateProduct
+module.exports={createProduct}
 
