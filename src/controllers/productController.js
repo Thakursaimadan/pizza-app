@@ -6,7 +6,8 @@
 //     return res.json({"message" : "ok"})
 // })
 
-const { registerProduct } = require("../services/productService");
+const { registerProduct, getProductbyId, deleteProductbyId } = require("../services/productService");
+const AppError = require("../utils/appError");
 
 async function CreateProduct (req,res){
     try{
@@ -31,15 +32,97 @@ async function CreateProduct (req,res){
     }
     catch(err)
     {
+        if(err instanceof AppError)
+        {
+            return res.status(err.statusCode).json({
+                sucess:false,
+                message:err.message,
+                data:{},
+                error:err
+            })
+
+        }
         console.log(err);
-        return res.status(err.statusCode).json({
+        return res.status(500).json({
             sucess:false,
-            message:err.reason,
+            message:"something went wrong",
             data:{},
             error:err
         })
     }
-    
-    
 }
-module.exports=CreateProduct
+async function getProduct(req,res)
+{
+    try{
+        let pId=req.params.id
+
+        const product=await getProductbyId(pId);
+
+        return res.status(201).json({
+            sucess:true,
+            message:"succesfully got product",
+            data:product,
+            error:{}
+        })
+
+    }
+    catch(err)
+    {
+        if(err instanceof AppError)
+            {
+                return res.status(err.statusCode).json({
+                    sucess:false,
+                    message:err.message,
+                    data:{},
+                    error:err
+                })
+    
+            }
+            console.log(err);
+            return res.status(500).json({
+                sucess:false,
+                message:"something went wrong",
+                data:{},
+                error:err
+            })
+    }
+}
+
+async function deleteProduct(req,res)
+{
+    try{
+        let pId=req.params.id
+        console.log("product id in delete",pId)
+
+        const product=await deleteProductbyId(pId);
+
+        return res.status(201).json({
+            sucess:true,
+            message:"succesfully deleted product",
+            data:product,
+            error:{}
+        })
+
+    }
+    catch(err)
+    {
+        if(err instanceof AppError)
+            {
+                return res.status(err.statusCode).json({
+                    sucess:false,
+                    message:err.message,
+                    data:{},
+                    error:err
+                })
+    
+            }
+            console.log(err);
+            return res.status(500).json({
+                sucess:false,
+                message:"something went wrong",
+                data:{},
+                error:err
+            })  
+    }
+}
+module.exports={CreateProduct,getProduct,deleteProduct}

@@ -1,7 +1,7 @@
 //resourse-user
 
 const express=require('express');
-const CreateProduct = require('../controllers/productController');
+const {CreateProduct, getProduct, deleteProduct} = require('../controllers/productController');
 const uploader = require('../middlewares/multermiddleware');
 
 //we have to intialise a router objext to add routes in a new file
@@ -10,5 +10,10 @@ const uploader = require('../middlewares/multermiddleware');
 const productRouter=express.Router();
 
 productRouter.post('/',uploader.single('productImage'),CreateProduct)
+
+productRouter.get('/:id',getProduct)
+
+productRouter.delete('/:id',deleteProduct)
+
 
 module.exports={productRouter} //exporing the router

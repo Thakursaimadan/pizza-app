@@ -1,4 +1,7 @@
-const Product = require("../schema/productSchema")
+const Product = require("../schema/productSchema");
+const BadRequestError = require("../utils/BadRequestError");
+const InternalServerError = require("../utils/internalServerError");
+const NotFoundError = require("../utils/notFoundError");
 
 async function createProduct(productDetails){
     try{
@@ -8,9 +11,48 @@ async function createProduct(productDetails){
     }
     catch(err)
     {
-        console.log(err);
+        if(err.name==='ValidationError'){
+            const errormsglist=Object.keys(err.errors).map((property)=>{
+                return err.errors[property].message;
+            })
+            throw new BadRequestError(errormsglist)
+        }
+        console.log(err)
+            throw new InternalServerError();
     }
 }
 
-module.exports={createProduct}
+async function getbyId(id)
+{
+    try{
+
+        const response = await Product.findById(id);
+        return response;
+
+    }
+    catch(err)
+    {
+        console.log(err)
+        throw new InternalServerError();
+
+    }
+   
+}
+async function deletebyId(id)
+{
+    try{
+
+        const response = await Product.findByIdAndDelete(id);
+        //console.log("iam in delete",response)
+        return response;
+
+    }
+    catch(err)
+    {
+        console.log(err)
+        throw new InternalServerError();
+    }
+}
+
+module.exports={createProduct,getbyId,deletebyId}
 

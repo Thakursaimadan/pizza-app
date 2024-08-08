@@ -3,6 +3,8 @@ const cloudinary=require('../config/cloudinaryconfig');
 
 const fs=require('fs/promises');
 const productRepo = require('../repository/productRepo');
+const InternalServerError = require('../utils/internalServerError');
+const NotFoundError = require('../utils/notFoundError');
 
 async function registerProduct(productDetails) {
 
@@ -23,13 +25,13 @@ async function registerProduct(productDetails) {
         }
         catch(err)
         {
-            console.log("iam here123")
+            //console.log("iam here123")
             // console.log('Cloudinary Cloud Name:', process.env.CLOUDINARY_CLOUD_NAME);
             // console.log('Cloudinary API Key:', process.env.CLOUDINARY_API_KEY);
             // console.log('Cloudinary API Secret:', process.env.CLOUDINARY_API_SECRET);
             console.log(err)
 
-            throw {reason:'not able create product',statusCode:500}
+            throw new InternalServerError()
         }
         
     }
@@ -37,19 +39,30 @@ async function registerProduct(productDetails) {
     //2.then use the url from cloudinary and other product details to add product in db
 
     
-    console.log("product Image",productImage)
     const product=await productRepo.createProduct({...productDetails,
         ProductImage:productImage
     });
-    console.log(product)
+    return product;
+}
 
+async function getProductbyId(id)
+{
+    const product=await productRepo.getbyId(id);
     if(!product)
     {
-        
-        throw {reason:'not able create product',statusCode:500}
+        throw new NotFoundError('product')
+    }
+    return product
+}
+async function deleteProductbyId(id)
+{
+    const product=await productRepo.deletebyId(id);
+    if(!product)
+    {
+        throw new NotFoundError('product')
     }
     return product;
 }
 module.exports={
-    registerProduct
+    registerProduct,getProductbyId,deleteProductbyId
 }
