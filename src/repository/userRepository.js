@@ -3,7 +3,8 @@ const { response } = require("express");
 const User=require("../schema/userSchema")
     async function findUser(parameters){
         try{
-            const reponse=await User.findOne({...parameters})
+            const response=await User.findOne({...parameters})
+            //console.log("repos response",response)
             return response;
         }
         catch(err)

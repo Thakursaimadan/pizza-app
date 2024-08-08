@@ -4,8 +4,11 @@ async function login(req,res)
 {
     const loginpayload=req.body;
     try{
+        console.log("in auth controller")
         const response=await loginUser(loginpayload);
-        res.cookie("authToken",response,{httpOnly:true,secure:false,maxAge:7*24*60*60*1000})
+        console.log("hello res",response)
+        res.cookie("authToken",response.token,{httpOnly:true,secure:false,maxAge:7*24*60*60*1000})
+        console.log("hello 545646")
         res.status(200).json({
             sucess:true,
             message:"logged in successfully",
@@ -15,9 +18,9 @@ async function login(req,res)
     }
     catch(err)
     {
-        return res.status(err.statusCode).json({
+        return res.status(401).json({
             sucess:false,
-            message:"logged in successfully",
+            message:"something happened",
             data:{},
             error:err
         })

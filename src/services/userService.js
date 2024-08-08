@@ -10,6 +10,7 @@ async function registerUser(userDetails)
                 mobileNumber:userDetails.mobileNumber
             }
         )
+        console.log("user",user)
         if(user)
         {
             //we found user
