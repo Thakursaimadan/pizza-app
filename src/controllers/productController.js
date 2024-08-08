@@ -15,7 +15,7 @@ async function CreateProduct (req,res){
         const product=await registerProduct({
             productName:req.body.productName,
             description:req.body.description,
-            imagePath: req.file.path,
+            imagePath: req.file?.path,
             price:req.body.price,
             category:req.body.category,
             instock:req.body.instock
