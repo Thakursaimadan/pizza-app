@@ -14,8 +14,10 @@ async function getCart(userId)
 }
 async function addToCart(userId,productId) {
     const cart= await getCart(userId);
+  //  console.log("got cart of the user",cart.id)
 
     const product=await getbyId(productId);
+  //  console.log("got product",product)
 
     if(!product)
     {

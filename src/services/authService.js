@@ -10,6 +10,7 @@ async function loginUser(authDetails)
     //check if there is a registered user with given emailid
 
     const user=await findUser({email});
+    console.log("user  ",user)
 
     if(!user)
     {

@@ -6,6 +6,7 @@ async function getCartbyUser(req,res)
 {
     try{
         const cart=await getCart(req.user.id);
+       
         return res.staus(200).json({
             sucess:true,
             message:"successfully fetched cart",
@@ -40,7 +41,8 @@ async function addProductToCart(req,res)
 {
     try{
         const cart=await addToCart(req.user.id,req.params.productId);
-        return res.staus(200).json({
+
+        return res.status(200).json({
             sucess:true,
             message:"successfully added product to cart",
             error:{},
