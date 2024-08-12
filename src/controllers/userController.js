@@ -1,5 +1,4 @@
 const UserRepository = require("../repository/userRepository")
-const { userRouter } = require("../routes/userRoute")
 const { registerUser } = require("../services/userService")
 
 async function createUser(req,res)

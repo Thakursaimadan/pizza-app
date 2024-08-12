@@ -13,7 +13,6 @@ const { productRouter } = require('./routes/productRoute');
 const app=express();
 app.use(bodyParser.json());
 app.use(bodyParser.text());
-app.use(bodyParser.urlencoded());
 app.use(cookieParser())
 
 //if your req route starts with /users then handle it using useRouter

@@ -21,6 +21,11 @@ const productSchema = new mongoose.Schema({
         trim: true,
         required: [true, "Price should be provided"]
     },
+    quantity:{
+        type:Number,
+        required:true,
+        default:10
+    },
     Category: {
         type: String,
         enum:['veg','non-veg','drinks','sides'],
