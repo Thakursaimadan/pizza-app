@@ -12,7 +12,8 @@ async function getCart(userId)
     }
     return cart;
 }
-async function addToCart(userId,productId) {
+async function ModifyCart(userId,productId,shouldAdd=true) {
+    const quantity_value=(shouldAdd==true)?1:-1;
     const cart= await getCart(userId);
   //  console.log("got cart of the user",cart.id)
 
@@ -30,30 +31,55 @@ async function addToCart(userId,productId) {
     //may be the product is already in the cart
     let foundproduct=false;
     cart.items.forEach(item=>{
-        if(item.product===productId)
+        //console.log(item.product,productId)
+        if(item.product._id==productId)
         {
-            item.quantity+=1;
-            foundproduct=true;
+           if(shouldAdd)
+           {
+            if(product.quantity>=item.quantity+1)
+                item.quantity+=quantity_value;
+            else
+            throw new BadRequestError(['product not available in stock'])
+           }
+           else
+           {
+            if(item.quantity>0)
+            {
+                item.quantity+=quantity_value;
+                if(item.quantity==0)
+                {
+                    cart.items=cart.items.filter(item=>item.product._id!=productId)
+                    foundproduct=true
+                    return;  
+                }
+            }
+            
+            else
+            throw new BadRequestError(['product not available in stock'])
+           }
+            
+           foundproduct=true;
         }
     });
     if(!foundproduct)
     {
-        cart.items.push({
-            product:productId,
-            quantity:1
-        })
+        if(shouldAdd)
+        {
+            cart.items.push({
+                product:productId,
+                quantity:1
+            })
+        }
+        else{
+            throw new NotFoundError('not found in the cart');
+        }
+        
     }
     await cart.save();
-    product.quantity-=1;
-    if(product.quantity===0)
-        product.instock=false;
-
-    await product.save();
-
     return cart;
 
     
 }
 module.exports={
-    getCart,addToCart
+    getCart,ModifyCart
 }
