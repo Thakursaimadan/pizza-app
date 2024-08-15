@@ -1,4 +1,4 @@
-const { getCart, ModifyCart } = require("../services/cartService");
+const { getCart, ModifyCart,clearTheCart } = require("../services/cartService");
 const AppError = require("../utils/appError");
 
 
@@ -71,5 +71,39 @@ async function ModifyProductToCart(req,res)
     }
 
 }
+async function clearProductsinCart(req,res)
+{
+    try{
+        const cart=await clearTheCart(req.user.id);
+       
+        return res.staus(200).json({
+            sucess:true,
+            message:"successfully cleared cart",
+            error:{},
+            data:cart
+        })
+    }
+    catch(err)
+    {
+        console.log(err);
+        if(err instanceof AppError)
+        {
+            return res.staus(err.statusCode).json({
+                sucess:false,
+                message:" ",
+                error:err.message,
+                data:{}
+            })
 
-module.exports={getCartbyUser,ModifyProductToCart}
+        }
+        return res.staus(500).json({
+            sucess:false,
+            message:" ",
+            error:"could not able clear cart",
+            data:{}
+        })
+    }
+
+}
+
+module.exports={getCartbyUser,ModifyProductToCart,clearProductsinCart}
