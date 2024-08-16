@@ -1,5 +1,5 @@
 
-const { response } = require("express");
+//const { response } = require("express");
 const User=require("../schema/userSchema")
     async function findUser(parameters){
         try{
