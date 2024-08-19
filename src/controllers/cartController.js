@@ -7,7 +7,7 @@ async function getCartbyUser(req,res)
     try{
         const cart=await getCart(req.user.id);
        
-        return res.staus(200).json({
+        return res.status(200).json({
             sucess:true,
             message:"successfully fetched cart",
             error:{},
@@ -19,7 +19,7 @@ async function getCartbyUser(req,res)
         console.log(err);
         if(err instanceof AppError)
         {
-            return res.staus(err.statusCode).json({
+            return res.status(err.statusCode).json({
                 sucess:false,
                 message:" ",
                 error:err.message,
@@ -27,7 +27,7 @@ async function getCartbyUser(req,res)
             })
 
         }
-        return res.staus(500).json({
+        return res.status(500).json({
             sucess:false,
             message:" ",
             error:"some thing went wrong",
@@ -76,7 +76,7 @@ async function clearProductsinCart(req,res)
     try{
         const cart=await clearTheCart(req.user.id);
        
-        return res.staus(200).json({
+        return res.status(200).json({
             sucess:true,
             message:"successfully cleared cart",
             error:{},
@@ -88,7 +88,7 @@ async function clearProductsinCart(req,res)
         console.log(err);
         if(err instanceof AppError)
         {
-            return res.staus(err.statusCode).json({
+            return res.status(err.statusCode).json({
                 sucess:false,
                 message:" ",
                 error:err.message,
@@ -96,7 +96,7 @@ async function clearProductsinCart(req,res)
             })
 
         }
-        return res.staus(500).json({
+        return res.status(500).json({
             sucess:false,
             message:" ",
             error:"could not able clear cart",

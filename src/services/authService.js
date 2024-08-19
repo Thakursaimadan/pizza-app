@@ -10,7 +10,7 @@ async function loginUser(authDetails)
     //check if there is a registered user with given emailid
 
     const user=await findUser({email});
-    console.log("user  ",user)
+   // console.log("user  ",user)
 
     if(!user)
     {
@@ -31,7 +31,7 @@ async function loginUser(authDetails)
     try{
         const token=jwt.sign({email:user.email,id:user._id,role:userRole},JWT_SECRET,{expiresIn: JWT_EXPIRY})
         //console.log("token",token)
-        console.log("token",token)
+       // console.log("token",token)
         return {token}
     }
     catch(err)

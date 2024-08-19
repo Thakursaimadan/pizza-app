@@ -8,6 +8,7 @@ const NotFoundError = require("../utils/notFoundError")
 async function createOrder(userId,paymentmethod)
 {
     const cart=await getCartbyuserId(userId,paymentmethod)
+   
     const user=await findUser({_id:cart.user})
     if(!cart)
     {
@@ -15,7 +16,7 @@ async function createOrder(userId,paymentmethod)
     }
     if(cart.items.length===0)
     {
-        throw new BadRequestError(["cart is empty add some items in cart"])
+        throw "cart is empty add some items in cart";
     }
     const orderObject ={};
     orderObject.user=cart.user;
@@ -42,6 +43,7 @@ async function createOrder(userId,paymentmethod)
 }
 async function getAllOrdersCreatedByUser(userId)
 {
+    
     const orders = await getOrderByUserId(userId);
     if(!orders)
     {
@@ -62,6 +64,7 @@ async function getOrderDetailsById(orderId)
 
 async function UpdateOrder(orderId,status)
 {
+    
     const order=await updateOrderStatus(orderId,status);
     if(!order)
     {

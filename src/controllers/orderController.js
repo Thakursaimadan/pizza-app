@@ -1,4 +1,4 @@
-const { createOrder, UpdateOrder, getOrderDetailsById } = require("../services/orderService");
+const { createOrder, UpdateOrder, getOrderDetailsById, getAllOrdersCreatedByUser } = require("../services/orderService");
 const AppError = require("../utils/appError");
 
 async function createTheOrder(req,res)
@@ -18,7 +18,7 @@ async function createTheOrder(req,res)
         console.log(err);
         if(err instanceof AppError)
         {
-            return res.staus(err.statusCode).json({
+            return res.status(err.statusCode).json({
                 sucess:false,
                 message:" ",
                 error:err.message,
@@ -26,10 +26,10 @@ async function createTheOrder(req,res)
             })
 
         }
-        return res.staus(500).json({
+        return res.status(500).json({
             sucess:false,
             message:" ",
-            error:"could not able clear cart",
+            error:"could not place order",
             data:{}
         })
     }
@@ -38,7 +38,7 @@ async function createTheOrder(req,res)
 async function getAllordersByUser(req,res)
 {
     try{
-        const order=await createOrder(req.user.id);
+        const order=await getAllOrdersCreatedByUser(req.user.id);
         return res.status(200).json({
             success:true,
             message:"successfully fetched orders",
@@ -52,7 +52,7 @@ async function getAllordersByUser(req,res)
         console.log(err);
         if(err instanceof AppError)
         {
-            return res.staus(err.statusCode).json({
+            return res.status(err.statusCode).json({
                 sucess:false,
                 message:" ",
                 error:err.message,
@@ -60,10 +60,10 @@ async function getAllordersByUser(req,res)
             })
 
         }
-        return res.staus(500).json({
+        return res.status(500).json({
             sucess:false,
             message:" ",
-            error:"could not able clear cart",
+            error:"could not able get all items of cart",
             data:{}
         })
     }
@@ -85,7 +85,7 @@ async function getOrder(req,res)
         console.log(err);
         if(err instanceof AppError)
         {
-            return res.staus(err.statusCode).json({
+            return res.status(err.statusCode).json({
                 sucess:false,
                 message:" ",
                 error:err.message,
@@ -93,7 +93,7 @@ async function getOrder(req,res)
             })
 
         }
-        return res.staus(500).json({
+        return res.status(500).json({
             sucess:false,
             message:" ",
             error:"could not able clear cart",
@@ -119,7 +119,7 @@ async function CancelOrder(req,res)
         console.log(err);
         if(err instanceof AppError)
         {
-            return res.staus(err.statusCode).json({
+            return res.status(err.statusCode).json({
                 sucess:false,
                 message:" ",
                 error:err.message,
@@ -127,7 +127,7 @@ async function CancelOrder(req,res)
             })
 
         }
-        return res.staus(500).json({
+        return res.status(500).json({
             sucess:false,
             message:" ",
             error:"could not able clear cart",
@@ -153,7 +153,7 @@ async function ChangeOrderStatus(req,res)
         console.log(err);
         if(err instanceof AppError)
         {
-            return res.staus(err.statusCode).json({
+            return res.status(err.statusCode).json({
                 sucess:false,
                 message:" ",
                 error:err.message,
@@ -161,7 +161,7 @@ async function ChangeOrderStatus(req,res)
             })
 
         }
-        return res.staus(500).json({
+        return res.status(500).json({
             sucess:false,
             message:" ",
             error:"could not able clear cart",

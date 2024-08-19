@@ -28,7 +28,7 @@ async function getOrderByUserId(userId)
 async function getOrderById(orderId)
 {
     try{
-        const order=await Order.findById({orderId}).populate("items.product");
+        const order=await Order.findById(orderId).populate("items.product");
         return order;
     }catch(err)
     {

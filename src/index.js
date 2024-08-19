@@ -10,6 +10,7 @@ const cloudinary=require("./config/cloudinaryconfig");
 const fs=require('fs/promises');
 const { isLoggedIn } = require('./validation/authValidator');
 const { productRouter } = require('./routes/productRoute');
+const { orderRouter } = require('./routes/orderRoute');
 const app=express();
 app.use(bodyParser.json());
 app.use(bodyParser.text());
@@ -20,7 +21,7 @@ app.use('/users',userRouter); //connects the router to the server
 app.use('/carts',cartRouter);
 app.use('/auth',authRouter);
 app.use('/products',productRouter);
-
+app.use('/orders',orderRouter);
 
 app.listen(ServerConfig.PORT,async ()=>{
     
